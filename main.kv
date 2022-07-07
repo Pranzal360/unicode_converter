@@ -1,0 +1,59 @@
+#:import utils kivy.utils
+#:import Clipboard kivy.core.clipboard.Clipboard
+
+Screen:
+    
+    MDToolbar:
+        id:toolbar
+        title:'unicode to preeti' 
+        elevation:20
+        pos_hint:{"top":1}
+        right_action_items:[["dots-vertical",lambda x:app.callback()],["sync", lambda x: app.change()]]
+        md_bg_color : 163/255, 185/255, 213/255,1
+        
+    MDTextField:
+        id:inField
+        hint_text:"Enter Unicode"
+        text:""
+        size_hint:.5,.2    
+        pos_hint:{'center_x':.5,'center_y':.7}
+        text_font_name:'font.otf'
+        mode:'rectangle'
+        multiline: True
+        required : True
+        font_name:'NotoSans-Regular.ttf'    
+
+    MDIconButton:
+        id:pastebtn
+        pos_hint:{'center_x':.73,'center_y':.74}
+        icon:'content-paste'
+        on_press:
+            data = Clipboard.paste()
+            app.pasteBtn(data),app.unicode(inField.text)
+
+    MDRectangleFlatButton:
+        id:convertBtn
+        text:"Convert"
+        pos_hint:{'center_x':.4,'center_y':.5}
+        on_press:app.unicode(inField.text)
+
+    MDRectangleFlatButton:
+        id:clear
+        text:"Clear All"
+        pos_hint:{'center_x':.6,'center_y':.5}
+        on_press:app.clearField()
+    
+    MDTextField:
+        id:outField
+        hint_text:"output"
+        size_hint:.5,.2    
+        pos_hint:{'center_x':.5,'center_y':.3}
+        mode:'rectangle'
+        multiline: True
+        font_name:'NotoSans-Regular.ttf'
+    
+    MDIconButton:
+        pos_hint:{'center_x':.73,'center_y':.34}
+        icon:'clipboard-multiple-outline'
+        on_press:
+            app.contentCopy(outField.text)
